@@ -63,3 +63,10 @@ For data ingestion, using Databricks Auto Loader. It's a tool that automatically
 <p align="center">
   <img width="600" src="https://github.com/nogibjj/IDS-Week11_MiniProject_us26/blob/main/images/7.png" alt="schema">
 </p>
+
+
+### CI/CD Automation 
+
+<p align="center">
+  <img width="600" src="https://github.com/nogibjj/IDS-Week11_MiniProject_us26/blob/main/images/8.png" alt="schema">
+</p>
