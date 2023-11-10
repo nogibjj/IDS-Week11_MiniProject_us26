@@ -1,104 +1,65 @@
-## Python script that interacts with a SQL database.
+## Data pipeline using the Databricks Platform
 
-[![SQL CI/CD](https://github.com/nogibjj/IDS-Week5_MiniProject_us26/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/IDS-Week5_MiniProject_us26/actions/workflows/cicd.yml)
+A data pipeline is a set of processes that enable the movement of data from source systems, transformation of that data based on specific requirements, and storage of the prepared data in a target system. This process makes raw data usable for data analysts and scientists to extract insights and perform analysis. An example of a data pipeline is the Extract, Transform, and Load (ETL) workflow, where data is taken from source systems, transformed to meet quality and structure requirements, and then loaded into a target system, like a data warehouse or data lake.
 
-<p align="center">
-  <img width="600" src="https://github.com/nogibjj/IDS-Week5_MiniProject_us26/blob/main/images/schema.png" alt="schema">
-</p>
+To build a data pipeline in Databricks, you can follow these steps:
+
+1. Use Databricks features to explore the raw dataset.
+2. Create a Databricks notebook to ingest raw source data and store it in a target table.
+3. Create another Databricks notebook to transform the raw source data and store the transformed data in a target table.
+4. Develop a Databricks notebook for querying the transformed data.
+5. Automate the data pipeline using a Databricks job.
+
+These steps assume that you are logged into Databricks, have access to a cluster, and, optionally, have set up a catalog and schema in Unity Catalog if you intend to publish tables there.
 
 
 ### Overview
 
-This repo has been created by forked from (https://github.com/nogibjj/sqlite-lab). I have used world university ranking csv file and loaded it into 'ranking.db' database under the table name 'universities'. Using **CRUD** operation to interacts with a SQL database.
+#### Ingest the raw data
 
-Here is an overview of CRUD operations:
-		
-  CRUD stands for Create, Read, Update, and Delete, which are the four basic operations for managing data in a database or data storage system. These operations are essential for interacting with and manipulating data within an application or database. Here's a brief overview of each CRUD operation:
+For data ingestion, using Databricks Auto Loader. It's a tool that automatically detects and processes new files in your cloud storage as they appear. Auto Loader can even automatically identify the schema of the loaded data, which means you don't need to explicitly define the data structure. This simplifies the process and allows you to evolve the table schema when new columns are introduced without manual intervention.
 
-1. **Create (C)**:
-   - Create is the operation used to add new data or records to a database.
-   - It typically involves inserting a new row or document into a database table or collection.
-   - In SQL, you use the `INSERT INTO` statement to create new records in a table.
-   - In NoSQL databases, you often use methods like `insertOne` or `insertMany` to add documents to a collection.
-
-2. **Read (R)**:
-   - Read is the operation used to retrieve data from a database.
-   - It involves querying the database to fetch existing records based on specific criteria.
-   - In SQL, you use the `SELECT` statement to read data from a table.
-   - In NoSQL databases, you use various query methods to retrieve documents that match your criteria.
-
-3. **Update (U)**:
-   - Update is the operation used to modify existing data in a database.
-   - It typically involves changing the values of one or more fields in an existing record.
-   - In SQL, you use the `UPDATE` statement to update data in a table.
-   - In NoSQL databases, you use methods like `updateOne` or `updateMany` to modify documents in a collection.
-
-4. **Delete (D)**:
-   - Delete is the operation used to remove data from a database.
-   - It can involve deleting specific records or entire rows from a table.
-   - In SQL, you use the `DELETE` statement to remove data from a table.
-   - In NoSQL databases, you use methods like `deleteOne` or `deleteMany` to delete documents from a collection.
-
-
-### Code Description
-
-1. create.py
-    This script is used for load and transform. A databased called 'ranking.db' with a table named 'universities' is created and a csv file is loaded into that table.
-2. read.py
-    This script is used to interact with the SQL database. The queries used are :
-    - SELECT "Name of University" FROM universities WHERE
-      "Location" == "United States"
-    - SELECT "Name of University", "No of student per staff" FROM
-      universities WHERE "No of student per staff" > 40.0
-    - SELECT "Name of University", "No of student per staff" FROM
-        universities WHERE ("No of student per staff" < 40.0) AND ("Location" == "Canada")
-3. update.py
-    Updating of tuple values already present in the table.
-
-4. delete.py
-    Deletion of data present in the table. The query used is :
-      DELETE FROM universities WHERE "Industry Income Score" < 90.0
-
-6. test_graph.py
-    ** pd.read_sql_query **  is used for creating visualisation.
-    It is a function used to read SQL query or database table into DataFrame.
-   
-6. Makefile with the following:
-
-	- install: using requirements.txt file to install required packages
-
-	- test:
-
-	python -m pytest -vv --cov=main *.py
 <p align="center">
-  <img width="600" src="https://github.com/nogibjj/IDS-Week5_MiniProject_us26/blob/main/images/test.png" alt="install">
+  <img width="600" src="https://github.com/nogibjj/IDS-Week11_MiniProject_us26/blob/main/images/5.png" alt="schema">
 </p>
 
-	- format: using black formatter
+
+#### Preparing the raw data
 
 <p align="center">
-  <img width="600" src="https://github.com/nogibjj/IDS-Week5_MiniProject_us26/blob/main/images/format.png" alt="format">
+  <img width="600" src="https://github.com/nogibjj/IDS-Week11_MiniProject_us26/blob/main/images/4.png" alt="schema">
 </p>
 
-      - lint: using ruff 
+
+#### Query the transformed data
 
 <p align="center">
-  <img width="600" src="https://github.com/nogibjj/IDS-Week5_MiniProject_us26/blob/main/images/lint.png" alt="lint">
-</p>	
-
-7.Created GitHub Actions that performs all four Makefile commands with badges for each one in the README.md
-
-##### Action include the general CI/CD process in test.yml file, which automatically generate the graph and markdown
-
-<p align="center">
-  <img width="600" src="https://github.com/nogibjj/IDS-Week5_MiniProject_us26/blob/main/images/ci_cd.png" alt="cicd">
+  <img width="600" src="https://github.com/nogibjj/IDS-Week11_MiniProject_us26/blob/main/images/3.png" alt="schema">
 </p>
 
-## Visualization 
-#### Visualization Created using sql database using pandas.read_sql_query (https://pandas.pydata.org/docs/reference/api/pandas.read_sql_query.html)
-
-##### Count of top universities vs mean industry income score 
 
 <p align="center">
-  <img width="600" src="https://github.com/nogibjj/IDS706-Individual_Project_1_us26/blob/main/output_graph/visualization.png" alt="visualization">
-</p>	
+  <img width="600" src="https://github.com/nogibjj/IDS-Week11_MiniProject_us26/blob/main/images/2.png" alt="schema">
+</p>
+
+
+<p align="center">
+  <img width="600" src="https://github.com/nogibjj/IDS-Week11_MiniProject_us26/blob/main/images/1.png" alt="schema">
+</p>
+
+
+## Workflow
+
+
+#### Successfully Running the Job
+
+<p align="center">
+  <img width="600" src="https://github.com/nogibjj/IDS-Week11_MiniProject_us26/blob/main/images/6.png" alt="schema">
+</p>
+
+
+#### Successfully Running the Pipeline
+
+<p align="center">
+  <img width="600" src="https://github.com/nogibjj/IDS-Week11_MiniProject_us26/blob/main/images/7.png" alt="schema">
+</p>
